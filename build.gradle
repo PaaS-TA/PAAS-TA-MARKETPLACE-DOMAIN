@@ -1,0 +1,27 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+group = 'org.openpaas.paasta'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'javax.validation:validation-api:2.0.1.Final'
+    compile 'org.projectlombok:lombok:1.16.20'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.1.RELEASE'
+    compile 'org.springframework.security:spring-security-core:5.1.2.RELEASE'
+}
