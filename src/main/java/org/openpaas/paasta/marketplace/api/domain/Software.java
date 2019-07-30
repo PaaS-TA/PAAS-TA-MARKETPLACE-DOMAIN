@@ -92,4 +92,7 @@ public class Software extends AbstractEntity {
     public void prePersist() {
     }
 
+    public boolean canUse() {
+        return status == Status.Approval && inUse == Yn.Y;
+    }
 }
