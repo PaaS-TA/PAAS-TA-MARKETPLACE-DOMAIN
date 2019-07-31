@@ -29,14 +29,15 @@ public class Software extends AbstractEntity {
     private Long id;
 
     @Column(unique = true)
-    @NotBlank(groups = { Create.class, Update.class })
+    @NotBlank(groups = { Create.class, Update.class, UpdateMetadata.class })
     private String name;
 
     @ManyToOne
-    @NotNull(groups = { Create.class, Update.class })
+    @NotNull(groups = { Create.class, Update.class, UpdateMetadata.class })
     private Category category;
 
     @Enumerated(EnumType.STRING)
+    @NotNull(groups = { UpdateMetadata.class })
     private Status status;
 
     @NotNull(groups = { Create.class, Update.class })
@@ -67,7 +68,7 @@ public class Software extends AbstractEntity {
     private String version;
 
     @Enumerated(EnumType.STRING)
-    @NotNull(groups = { Create.class, Update.class })
+    @NotNull(groups = { Create.class, Update.class, UpdateMetadata.class })
     protected Yn inUse;
 
     @Lob
@@ -85,6 +86,9 @@ public class Software extends AbstractEntity {
     }
 
     public interface Update {
+    }
+
+    public interface UpdateMetadata {
     }
 
     @PrePersist
