@@ -1,5 +1,6 @@
 package org.openpaas.paasta.marketplace.api.domain;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -39,6 +40,8 @@ public class Software extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     @NotNull(groups = { UpdateMetadata.class })
     private Status status;
+
+    private LocalDateTime statusModifiedDate;
 
     @NotNull(groups = { Create.class, Update.class })
     private String app;
@@ -99,4 +102,5 @@ public class Software extends AbstractEntity {
     public boolean canUse() {
         return status == Status.Approval && inUse == Yn.Y;
     }
+
 }

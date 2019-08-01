@@ -13,13 +13,18 @@ import org.springframework.data.jpa.domain.Specification;
 import lombok.Data;
 
 @Data
-public class CategorySpecification implements Specification<Category> {
+public class SoftwareHistorySpecification implements Specification<SoftwareHistory> {
 
     private static final long serialVersionUID = 1L;
 
+    private Long softwareId;
+
     @Override
-    public Predicate toPredicate(Root<Category> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    public Predicate toPredicate(Root<SoftwareHistory> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
+        if (softwareId != null) {
+            restrictions.add(builder.equal(root.get("software").get("id"), softwareId));
+        }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
     }
