@@ -8,6 +8,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
+compileJava.options.encoding = 'UTF-8'
 
 group = 'org.openpaas.paasta'
 version = '0.0.1-SNAPSHOT'

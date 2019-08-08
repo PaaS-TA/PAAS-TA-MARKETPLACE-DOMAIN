@@ -78,7 +78,17 @@ public class Software extends AbstractEntity {
     private String confirmComment;
 
     public enum Status {
-        Pending, Approval, Rejected
+        Pending("대기"), Approval("승인"), Rejected("반려");
+
+        private String name;
+
+        Status(String name) {
+            this.name = name;
+        }
+
+        public String getName() { // 문자를 받아오는 함수
+            return name;
+        }
     };
 
     public enum Type {
