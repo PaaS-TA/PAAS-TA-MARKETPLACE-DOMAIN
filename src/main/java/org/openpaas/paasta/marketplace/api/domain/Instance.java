@@ -60,6 +60,8 @@ public class Instance extends AbstractEntity {
 
     private LocalDateTime usageEndDate;
 
+    private String host;
+
     public enum Status {
         // provision
         Approval,
