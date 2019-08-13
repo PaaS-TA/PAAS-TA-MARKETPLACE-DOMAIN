@@ -74,10 +74,10 @@ public class SoftwareSpecification implements Specification<Software> {
             restrictions.add(builder.lessThanOrEqualTo(root.get("createdDate"), createdDateBefore));
         }
         if (statusModifiedDateAfter != null) {
-            restrictions.add(builder.greaterThanOrEqualTo(root.get("statusModifiedDate"), createdDateAfter));
+            restrictions.add(builder.greaterThanOrEqualTo(root.get("statusModifiedDate"), statusModifiedDateAfter));
         }
         if (statusModifiedDateBefore != null) {
-            restrictions.add(builder.lessThanOrEqualTo(root.get("statusModifiedDate"), createdDateBefore));
+            restrictions.add(builder.lessThanOrEqualTo(root.get("statusModifiedDate"), statusModifiedDateBefore));
         }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
