@@ -40,6 +40,12 @@ public class SoftwareSpecification implements Specification<Software> {
     @DateTimeFormat(iso = ISO.DATE_TIME)
     private LocalDateTime createdDateBefore;
 
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDateTime statusModifiedDateAfter;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDateTime statusModifiedDateBefore;
+    
     @Override
     public Predicate toPredicate(Root<Software> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
@@ -66,6 +72,12 @@ public class SoftwareSpecification implements Specification<Software> {
         }
         if (createdDateBefore != null) {
             restrictions.add(builder.lessThanOrEqualTo(root.get("createdDate"), createdDateBefore));
+        }
+        if (statusModifiedDateAfter != null) {
+            restrictions.add(builder.greaterThanOrEqualTo(root.get("statusModifiedDate"), createdDateAfter));
+        }
+        if (statusModifiedDateBefore != null) {
+            restrictions.add(builder.lessThanOrEqualTo(root.get("statusModifiedDate"), createdDateBefore));
         }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
