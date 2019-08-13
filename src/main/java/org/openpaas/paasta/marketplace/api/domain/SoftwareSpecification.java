@@ -1,5 +1,6 @@
 package org.openpaas.paasta.marketplace.api.domain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import org.openpaas.paasta.marketplace.api.domain.Software.Type;
 import org.springframework.data.jpa.domain.Specification;
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class SoftwareSpecification implements Specification<Software> {
@@ -30,6 +32,12 @@ public class SoftwareSpecification implements Specification<Software> {
     private String nameLike;
 
     private Type type;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime createdDateAfter;
+
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    private LocalDateTime createdDateBefore;
 
     @Override
     public Predicate toPredicate(Root<Software> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -51,6 +59,12 @@ public class SoftwareSpecification implements Specification<Software> {
         }
         if (type != null) {
             restrictions.add(builder.equal(root.get("type"), type));
+        }
+        if (createdDateAfter != null) {
+            restrictions.add(builder.greaterThanOrEqualTo(root.get("createdDate"), createdDateAfter));
+        }
+        if (createdDateBefore != null) {
+            restrictions.add(builder.lessThanOrEqualTo(root.get("createdDate"), createdDateBefore));
         }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
