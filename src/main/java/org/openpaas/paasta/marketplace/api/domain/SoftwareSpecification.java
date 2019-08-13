@@ -12,9 +12,10 @@ import javax.persistence.criteria.Root;
 import org.openpaas.paasta.marketplace.api.domain.Software.Status;
 import org.openpaas.paasta.marketplace.api.domain.Software.Type;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 public class SoftwareSpecification implements Specification<Software> {
@@ -33,11 +34,17 @@ public class SoftwareSpecification implements Specification<Software> {
 
     private Type type;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private LocalDateTime createdDateAfter;
 
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+    @DateTimeFormat(iso = ISO.DATE_TIME)
     private LocalDateTime createdDateBefore;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDateTime statusModifiedDateAfter;
+
+    @DateTimeFormat(iso = ISO.DATE_TIME)
+    private LocalDateTime statusModifiedDateBefore;
 
     @Override
     public Predicate toPredicate(Root<Software> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
@@ -65,6 +72,12 @@ public class SoftwareSpecification implements Specification<Software> {
         }
         if (createdDateBefore != null) {
             restrictions.add(builder.lessThanOrEqualTo(root.get("createdDate"), createdDateBefore));
+        }
+        if (statusModifiedDateAfter != null) {
+            restrictions.add(builder.greaterThanOrEqualTo(root.get("statusModifiedDate"), createdDateAfter));
+        }
+        if (statusModifiedDateBefore != null) {
+            restrictions.add(builder.lessThanOrEqualTo(root.get("statusModifiedDate"), createdDateBefore));
         }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
