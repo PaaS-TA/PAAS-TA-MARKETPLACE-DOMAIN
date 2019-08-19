@@ -48,7 +48,7 @@ public class ProfileSpecification implements Specification<Profile> {
             restrictions.add(builder.greaterThanOrEqualTo(root.get("createdDate"), createdDateAfter));
         }
         if (createdDateBefore != null) {
-            restrictions.add(builder.lessThanOrEqualTo(root.get("createdDate"), createdDateBefore));
+            restrictions.add(builder.lessThan(root.get("createdDate"), createdDateBefore));
         }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
