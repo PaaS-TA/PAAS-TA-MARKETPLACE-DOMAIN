@@ -44,12 +44,13 @@ public class Software extends AbstractEntity {
     private LocalDateTime statusModifiedDate;
 
     @NotNull(groups = { Create.class, Update.class })
-    private String app;
+    private String app, appPath;
 
     @NotNull(groups = { Create.class, Update.class })
-    private String manifest;
+    private String manifest, manifestPath;
 
-    private String icon;
+    @NotNull(groups = { Create.class, Update.class })
+    private String icon, iconPath;
 
     @ElementCollection
     private List<String> screenshotList;
