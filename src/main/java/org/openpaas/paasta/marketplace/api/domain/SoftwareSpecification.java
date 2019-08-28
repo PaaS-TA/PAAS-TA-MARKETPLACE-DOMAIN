@@ -22,6 +22,10 @@ public class SoftwareSpecification implements Specification<Software> {
 
     private static final long serialVersionUID = 1L;
 
+    private Long id;
+
+    private List<Long> idIn;
+
     private Yn inUse;
 
     private Status status;
@@ -49,6 +53,12 @@ public class SoftwareSpecification implements Specification<Software> {
     @Override
     public Predicate toPredicate(Root<Software> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
+        if (id != null) {
+            restrictions.add(builder.equal(root.get("id"), id));
+        }
+        if (idIn != null && !idIn.isEmpty()) {
+            restrictions.add(root.get("id").in(idIn));
+        }
         if (inUse != null) {
             restrictions.add(builder.equal(root.get("inUse"), inUse));
         }
