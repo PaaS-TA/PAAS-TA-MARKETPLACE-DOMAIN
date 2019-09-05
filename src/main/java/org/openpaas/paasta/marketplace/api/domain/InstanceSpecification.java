@@ -32,6 +32,8 @@ public class InstanceSpecification implements Specification<Instance> {
 
     private Long categoryId;
 
+    private Long softwareId;
+
     private String softwareNameLike;
 
     private Type softwareType;
@@ -77,6 +79,9 @@ public class InstanceSpecification implements Specification<Instance> {
         }
         if (categoryId != null) {
             restrictions.add(builder.equal(root.get("software").get("category").get("id"), categoryId));
+        }
+        if (softwareId != null) {
+            restrictions.add(builder.equal(root.get("software").get("id"), softwareId));
         }
         if (softwareNameLike != null) {
             restrictions.add(builder.like(root.get("software").get("name"), "%" + softwareNameLike + "%"));
