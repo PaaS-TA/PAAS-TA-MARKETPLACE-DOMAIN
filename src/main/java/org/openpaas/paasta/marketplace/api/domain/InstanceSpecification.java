@@ -1,19 +1,19 @@
 package org.openpaas.paasta.marketplace.api.domain;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Data;
+import org.openpaas.paasta.marketplace.api.domain.Instance.Status;
+import org.openpaas.paasta.marketplace.api.domain.Software.Type;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.openpaas.paasta.marketplace.api.domain.Instance.Status;
-import org.openpaas.paasta.marketplace.api.domain.Software.Type;
-import org.springframework.data.jpa.domain.Specification;
-
-import lombok.Data;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class InstanceSpecification implements Specification<Instance> {
@@ -37,6 +37,12 @@ public class InstanceSpecification implements Specification<Instance> {
     private String softwareNameLike;
 
     private Type softwareType;
+
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDateTime usageStartDate;
+
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDateTime usageEndDate;
 
     private Instance.ProvisionStatus provisionStatus;
 
@@ -89,6 +95,33 @@ public class InstanceSpecification implements Specification<Instance> {
         if (softwareType != null) {
             restrictions.add(builder.equal(root.get("software").get("type"), softwareType));
         }
+
+        if (usageStartDate != null && usageEndDate != null) {
+//            Predicate predicate = builder.or(
+//                    builder.and(builder.lessThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
+//                            builder.or(builder.isNull(root.get("usageEndDate")),
+//                                    builder.and(
+//                                            builder.greaterThanOrEqualTo(root.get("usageEndDate"), usageStartDate),
+//                                            builder.lessThan(root.get("usageEndDate"), usageEndDate)
+//                                    )
+//                            )
+//                    ),
+//                    builder.and(builder.greaterThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
+//                            builder.lessThan(root.get("usageStartDate"), usageEndDate)));
+
+            Predicate predicate = builder.or(
+                    builder.and(builder.lessThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
+                        builder.and(
+                                builder.greaterThanOrEqualTo(builder.nullif(root.get("usageEndDate"), LocalDateTime.now()) , usageStartDate),
+                                builder.lessThan(builder.nullif(root.get("usageEndDate"), LocalDateTime.now()), usageEndDate)
+                        )
+                    ),
+                    builder.and(builder.greaterThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
+                            builder.lessThan(root.get("usageStartDate"), usageEndDate)));
+
+            restrictions.add(predicate);
+        }
+
         if (provisionStatus != null) {
             restrictions.add(builder.equal(root.get("provisionStatus"), provisionStatus));
         }
