@@ -19,7 +19,7 @@ import java.util.List;
 public class InstanceSpecification implements Specification<Instance> {
 
     private static final long serialVersionUID = 1L;
-    
+
     private static String systemHost;
 
     private String host;
@@ -70,7 +70,7 @@ public class InstanceSpecification implements Specification<Instance> {
 
         return spec;
     }
-    
+
     @Override
     public Predicate toPredicate(Root<Instance> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
@@ -97,27 +97,23 @@ public class InstanceSpecification implements Specification<Instance> {
         }
 
         if (usageStartDate != null && usageEndDate != null) {
-//            Predicate predicate = builder.or(
-//                    builder.and(builder.lessThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
-//                            builder.or(builder.isNull(root.get("usageEndDate")),
-//                                    builder.and(
-//                                            builder.greaterThanOrEqualTo(root.get("usageEndDate"), usageStartDate),
-//                                            builder.lessThan(root.get("usageEndDate"), usageEndDate)
-//                                    )
-//                            )
-//                    ),
-//                    builder.and(builder.greaterThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
-//                            builder.lessThan(root.get("usageStartDate"), usageEndDate)));
-
-            Predicate predicate = builder.or(
-                    builder.and(builder.lessThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
-                        builder.and(
-                                builder.greaterThanOrEqualTo(builder.nullif(root.get("usageEndDate"), LocalDateTime.now()) , usageStartDate),
-                                builder.lessThan(builder.nullif(root.get("usageEndDate"), LocalDateTime.now()), usageEndDate)
-                        )
-                    ),
-                    builder.and(builder.greaterThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
-                            builder.lessThan(root.get("usageStartDate"), usageEndDate)));
+            Predicate predicate =
+                    builder.or(
+                            builder.and(
+                                builder.lessThanOrEqualTo(root.get("usageStartDate"),
+                                        usageStartDate),
+                                builder.or(
+                                        builder.isNull(root.get("usageEndDate")),
+                                        builder.greaterThanOrEqualTo(root.get("usageEndDate"),
+                                                usageStartDate)
+                                )
+                            ),
+                            builder.and(
+                                builder.greaterThanOrEqualTo(root.get("usageStartDate"),
+                                        usageStartDate),
+                                builder.lessThan(root.get("usageStartDate"), usageEndDate)
+                            )
+                        );
 
             restrictions.add(predicate);
         }
@@ -150,7 +146,7 @@ public class InstanceSpecification implements Specification<Instance> {
             restrictions.add(builder.equal(root.get("host"), host));
         }
 
-        return builder.and(restrictions.toArray(new Predicate[] {}));
+        return builder.and(restrictions.toArray(new Predicate[]{}));
     }
 
 }
