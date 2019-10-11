@@ -66,7 +66,7 @@ public class Software extends AbstractEntity {
     private Type type;
 
     @NotNull(groups = { Create.class, Update.class })
-    private Long pricePerDay;
+    private Long pricePerMonth;
 
     @NotNull(groups = { Create.class, Update.class })
     private String version;
