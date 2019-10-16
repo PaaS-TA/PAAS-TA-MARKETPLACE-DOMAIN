@@ -1,7 +1,11 @@
 package org.openpaas.paasta.marketplace.api.domain;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -30,9 +34,27 @@ public class Profile extends AbstractEntity {
     private String email;
 
     private String siteUrl;
+    
+    @Enumerated(EnumType.STRING)
+    private Status status;
+    
+    private LocalDateTime statusModifiedDate;
 
     public enum Type {
        Public, Company, Personal, Etc
     }
 
+    public enum Status {
+        Request("요청"), Approval("승인"), Rejected("반려");
+
+        private String name;
+
+        Status(String name) {
+            this.name = name;
+        }
+
+        public String getName() { // 문자를 받아오는 함수
+            return name;
+        }
+    };
 }
