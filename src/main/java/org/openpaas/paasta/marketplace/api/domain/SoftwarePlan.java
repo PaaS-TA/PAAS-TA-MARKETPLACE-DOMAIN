@@ -1,17 +1,16 @@
 package org.openpaas.paasta.marketplace.api.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
-
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 public class SoftwarePlan extends AbstractEntity {
 
@@ -19,20 +18,19 @@ public class SoftwarePlan extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @NotNull
-    private Software software;
+    @Column(name = "software_id")
+    private Long softwareId;
 
     private String applyMonth;	//yyyyMM
 
     private String name;
 
     private String description;
-    
+
     private String memorySize;
 
     private String diskSize;
-    
+
     private Integer cpuAmt = 0;		//원/월
 
     private Integer memoryAmt = 0;	//원/월
