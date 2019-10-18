@@ -17,6 +17,7 @@ import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import javax.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -77,6 +78,9 @@ public class Software extends AbstractEntity {
 
     @Lob
     private String confirmComment;
+    
+    @Transient
+    private String historyDescription;
 
     public enum Status {
         Pending("대기"), Approval("승인"), Rejected("반려");
