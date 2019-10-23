@@ -37,4 +37,22 @@ public class SoftwarePlan extends AbstractEntity {
 
     private Integer diskAmt = 0;	//원/월
 
+    public interface Update {
+    }
+
+    @Override
+    public String toString() {
+        return "SoftwarePlan{" +
+                "id=" + id +
+                ", softwareId=" + softwareId +
+                ", applyMonth='" + applyMonth + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", memorySize='" + memorySize + '\'' +
+                ", diskSize='" + diskSize + '\'' +
+                ", cpuAmt=" + cpuAmt +
+                ", memoryAmt=" + memoryAmt +
+                ", diskAmt=" + diskAmt +
+                '}';
+    }
 }
