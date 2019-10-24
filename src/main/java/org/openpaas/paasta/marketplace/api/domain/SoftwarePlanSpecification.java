@@ -21,7 +21,7 @@ public class SoftwarePlanSpecification implements Specification<SoftwarePlan> {
     public Predicate toPredicate(Root<SoftwarePlan> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
         if (softwareId != null) {
-            restrictions.add(builder.equal(root.get("software").get("id"), softwareId));
+            restrictions.add(builder.equal(root.get("softwareId"), softwareId));
         }
 
         return builder.and(restrictions.toArray(new Predicate[] {}));
