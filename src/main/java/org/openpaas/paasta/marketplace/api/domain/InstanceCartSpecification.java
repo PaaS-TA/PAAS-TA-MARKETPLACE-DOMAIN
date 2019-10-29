@@ -75,75 +75,9 @@ public class InstanceCartSpecification implements Specification<InstanceCart> {
     @Override
     public Predicate toPredicate(Root<InstanceCart> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
-        if (inUse != null) {
-            restrictions.add(builder.equal(root.get("inUse"), inUse));
-        }
-        if (status != null) {
-            restrictions.add(builder.equal(root.get("status"), status));
-        }
+        
         if (createdBy != null) {
             restrictions.add(builder.equal(root.get("createdBy"), createdBy));
-        }
-        if (categoryId != null) {
-            restrictions.add(builder.equal(root.get("software").get("category").get("id"), categoryId));
-        }
-        if (softwareId != null) {
-            restrictions.add(builder.equal(root.get("software").get("id"), softwareId));
-        }
-        if (softwareNameLike != null) {
-            restrictions.add(builder.like(root.get("software").get("name"), "%" + softwareNameLike + "%"));
-        }
-        if (softwareType != null) {
-            restrictions.add(builder.equal(root.get("software").get("type"), softwareType));
-        }
-
-        if (usageStartDate != null && usageEndDate != null) {
-            Predicate predicate =
-                    builder.or(
-                            builder.and(
-                                builder.lessThanOrEqualTo(root.get("usageStartDate"),
-                                        usageStartDate),
-                                builder.or(
-                                        builder.isNull(root.get("usageEndDate")),
-                                        builder.greaterThanOrEqualTo(root.get("usageEndDate"),
-                                                usageStartDate)
-                                )
-                            ),
-                            builder.and(
-                                builder.greaterThanOrEqualTo(root.get("usageStartDate"),
-                                        usageStartDate),
-                                builder.lessThan(root.get("usageStartDate"), usageEndDate)
-                            )
-                        );
-            restrictions.add(predicate);
-        }
-
-        if (provisionStatus != null) {
-            restrictions.add(builder.equal(root.get("provisionStatus"), provisionStatus));
-        }
-        if (provisionStatusIn != null && !provisionStatusIn.isEmpty()) {
-            restrictions.add(root.get("provisionStatus").in(provisionStatusIn));
-        }
-        if (provisionTryCountMax != null) {
-            restrictions.add(builder.lessThanOrEqualTo(root.get("provisionTryCount"), provisionTryCountMax));
-        }
-        if (provisionStartDateBefore != null) {
-            restrictions.add(builder.lessThan(root.get("provisionStartDate"), provisionStartDateBefore));
-        }
-        if (deprovisionStatus != null) {
-            restrictions.add(builder.equal(root.get("deprovisionStatus"), deprovisionStatus));
-        }
-        if (deprovisionStatusIn != null && !deprovisionStatusIn.isEmpty()) {
-            restrictions.add(root.get("deprovisionStatus").in(deprovisionStatusIn));
-        }
-        if (deprovisionTryCountMax != null) {
-            restrictions.add(builder.lessThanOrEqualTo(root.get("deprovisionTryCount"), deprovisionTryCountMax));
-        }
-        if (deprovisionStartDateBefore != null) {
-            restrictions.add(builder.lessThan(root.get("deprovisionStartDate"), deprovisionStartDateBefore));
-        }
-        if (host != null) {
-            restrictions.add(builder.equal(root.get("host"), host));
         }
 
         return builder.and(restrictions.toArray(new Predicate[]{}));
