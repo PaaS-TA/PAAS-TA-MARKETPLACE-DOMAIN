@@ -17,13 +17,17 @@ public class SoftwarePlanSpecification implements Specification<SoftwarePlan> {
 
     private Long softwareId;
 
+    private String applyMonth;
+
     @Override
     public Predicate toPredicate(Root<SoftwarePlan> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
         if (softwareId != null) {
             restrictions.add(builder.equal(root.get("softwareId"), softwareId));
         }
-
+        if (applyMonth != null) {
+            restrictions.add(builder.equal(root.get("applyMonth"), applyMonth));
+        }
         return builder.and(restrictions.toArray(new Predicate[] {}));
 
     }
