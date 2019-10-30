@@ -61,6 +61,8 @@ public class InstanceCartSpecification implements Specification<InstanceCart> {
     private Integer deprovisionTryCountMax;
 
     private LocalDateTime deprovisionStartDateBefore;
+    
+    private List<Long> inInstanceCartId;
  
     public static void setSystemHost(String systemHost) {
         InstanceCartSpecification.systemHost = systemHost;
@@ -78,6 +80,9 @@ public class InstanceCartSpecification implements Specification<InstanceCart> {
         
         if (createdBy != null) {
             restrictions.add(builder.equal(root.get("createdBy"), createdBy));
+        }
+        if (inInstanceCartId != null && !inInstanceCartId.isEmpty()) {
+            restrictions.add(root.get("id").in(inInstanceCartId));
         }
 
         return builder.and(restrictions.toArray(new Predicate[]{}));
