@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.Transient;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -64,6 +66,9 @@ public class InstanceCart extends AbstractEntity {
     private LocalDateTime usageEndDate;
 
     private String host;
+    
+    @Transient
+    private Long SoftwarePlanAmtMonth;
     
     public enum Status {
         // provision

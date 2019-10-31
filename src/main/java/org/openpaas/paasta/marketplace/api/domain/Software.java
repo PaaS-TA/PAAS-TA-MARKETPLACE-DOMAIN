@@ -80,6 +80,9 @@ public class Software extends AbstractEntity {
     
     @Transient
     private String historyDescription;
+    
+    @Transient
+    private Long softwarePlanAmtMonth;
 
     public enum Status {
         Pending("대기"), Approval("승인"), Rejected("반려");
@@ -116,5 +119,4 @@ public class Software extends AbstractEntity {
     public boolean canUse() {
         return status == Status.Approval && inUse == Yn.Y;
     }
-
 }

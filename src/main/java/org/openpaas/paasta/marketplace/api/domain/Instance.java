@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.Transient;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -66,6 +68,9 @@ public class Instance extends AbstractEntity {
     private LocalDateTime usageEndDate;
 
     private String host;
+    
+    @Transient
+    private Long SoftwarePlanAmtMonth;
 
     public enum Status {
         // provision
