@@ -97,25 +97,18 @@ public class InstanceSpecification implements Specification<Instance> {
         }
 
         if (usageStartDate != null && usageEndDate != null) {
-            Predicate predicate =
-                    builder.or(
-                            builder.and(
-                                builder.lessThanOrEqualTo(root.get("usageStartDate"),
-                                        usageStartDate),
-                                builder.or(
-                                        builder.isNull(root.get("usageEndDate")),
-                                        builder.greaterThanOrEqualTo(root.get("usageEndDate"),
-                                                usageStartDate)
-                                )
-                            ),
-                            builder.and(
-                                builder.greaterThanOrEqualTo(root.get("usageStartDate"),
-                                        usageStartDate),
-                                builder.lessThan(root.get("usageStartDate"), usageEndDate)
-                            )
-                        );
-
-            restrictions.add(predicate);
+            Predicate predicate1 =
+            	builder.and(
+            		builder.lessThanOrEqualTo(root.get("usageStartDate"), usageStartDate),
+            		builder.greaterThanOrEqualTo(root.get("usageEndDate"),usageStartDate)
+            	);
+            Predicate predicate2 =
+            	builder.and(
+            		builder.lessThanOrEqualTo(root.get("usageStartDate"), usageEndDate),
+            		builder.greaterThanOrEqualTo(root.get("usageEndDate"),usageEndDate)
+            	);
+            Predicate predicate3 = builder.or(predicate1, predicate2);
+            restrictions.add(predicate3);
         }
 
         if (provisionStatus != null) {
