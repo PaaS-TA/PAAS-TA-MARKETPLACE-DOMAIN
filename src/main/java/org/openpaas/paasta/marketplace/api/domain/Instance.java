@@ -71,6 +71,9 @@ public class Instance extends AbstractEntity {
     
     @Transient
     private Long SoftwarePlanAmtMonth;
+    
+    @Transient
+    private Long pricePerInstance;
 
     public enum Status {
         // provision

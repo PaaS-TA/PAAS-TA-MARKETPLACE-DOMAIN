@@ -97,7 +97,7 @@ public class InstanceSpecification implements Specification<Instance> {
         }
 
         if (usageStartDate != null && usageEndDate != null) {
-            Predicate predicate =
+        	Predicate predicate =
                     builder.or(
                             builder.and(
                                 builder.lessThanOrEqualTo(root.get("usageStartDate"),
@@ -114,7 +114,6 @@ public class InstanceSpecification implements Specification<Instance> {
                                 builder.lessThanOrEqualTo(root.get("usageStartDate"), usageEndDate)
                             )
                         );
-
             restrictions.add(predicate);
         }
 
