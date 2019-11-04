@@ -15,6 +15,8 @@ public class SoftwarePlanSpecification implements Specification<SoftwarePlan> {
 
     private static final long serialVersionUID = 1L;
 
+    private String id;
+
     private Long softwareId;
 
     private String applyMonth;
@@ -22,6 +24,9 @@ public class SoftwarePlanSpecification implements Specification<SoftwarePlan> {
     @Override
     public Predicate toPredicate(Root<SoftwarePlan> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         List<Predicate> restrictions = new ArrayList<>();
+        if (id != null) {
+            restrictions.add(builder.equal(root.get("id"), id));
+        }
         if (softwareId != null) {
             restrictions.add(builder.equal(root.get("softwareId"), softwareId));
         }
