@@ -3,10 +3,7 @@ package org.openpaas.paasta.marketplace.api.domain;
 import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -29,6 +26,13 @@ public class TestSoftwareInfo {
 
     private Long planGuid;
 
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     @CreatedDate
     protected LocalDateTime createdDate = LocalDateTime.now();
+
+    public enum Status {
+        Successful, Failed
+    }
 }
