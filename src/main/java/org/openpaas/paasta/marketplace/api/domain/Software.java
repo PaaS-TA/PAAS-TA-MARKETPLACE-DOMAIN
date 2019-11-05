@@ -26,7 +26,7 @@ public class Software extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column
     @NotBlank(groups = { Create.class, Update.class, UpdateMetadata.class })
     private String name;
 
@@ -77,10 +77,10 @@ public class Software extends AbstractEntity {
 
     @Lob
     private String confirmComment;
-    
+
     @Transient
     private String historyDescription;
-    
+
     @Transient
     private Long softwarePlanAmtMonth;
 
