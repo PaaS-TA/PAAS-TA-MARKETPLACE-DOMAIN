@@ -31,11 +31,11 @@ public class SoftwarePlan extends AbstractEntity {
 
     private String diskSize;
 
-    private Integer cpuAmt = 0;		//원/월
+    private Integer cpuAmt;		//원/월
 
-    private Integer memoryAmt = 0;	//원/월
+    private Integer memoryAmt;	//원/월
 
-    private Integer diskAmt = 0;	//원/월
+    private Integer diskAmt;	//원/월
 
     public interface Update {
     }
