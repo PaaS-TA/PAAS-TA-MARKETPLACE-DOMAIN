@@ -70,6 +70,9 @@ public class InstanceCart extends AbstractEntity {
     @Transient
     private Long SoftwarePlanAmtMonth;
     
+    @Transient
+    private Long pricePerInstance;
+    
     public enum Status {
         // provision
         Approval,
