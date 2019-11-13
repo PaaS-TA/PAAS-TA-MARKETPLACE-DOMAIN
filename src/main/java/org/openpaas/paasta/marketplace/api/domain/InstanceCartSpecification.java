@@ -14,6 +14,7 @@ import org.openpaas.paasta.marketplace.api.domain.Software.Type;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.util.StringUtils;
 
 import lombok.Data;
 
@@ -63,6 +64,14 @@ public class InstanceCartSpecification implements Specification<InstanceCart> {
     private LocalDateTime deprovisionStartDateBefore;
     
     private List<Long> inInstanceCartId;
+    
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDateTime srchStartDate;
+
+    @DateTimeFormat(iso = ISO.DATE)
+    private LocalDateTime srchEndDate;
+    
+    private String srchSoftwareName;
  
     public static void setSystemHost(String systemHost) {
         InstanceCartSpecification.systemHost = systemHost;
@@ -83,6 +92,17 @@ public class InstanceCartSpecification implements Specification<InstanceCart> {
         }
         if (inInstanceCartId != null && !inInstanceCartId.isEmpty()) {
             restrictions.add(root.get("id").in(inInstanceCartId));
+        }
+        if (categoryId != null) {
+            restrictions.add(builder.equal(root.get("software").get("category").get("id"), categoryId));
+        }
+        if (srchStartDate != null && srchEndDate != null) {
+        	Predicate predicate = builder.and(builder.greaterThanOrEqualTo(root.get("createdDate"), srchStartDate),
+                          	  				  builder.lessThanOrEqualTo(root.get("createdDate"),srchEndDate));
+            restrictions.add(predicate);
+        }
+        if (srchSoftwareName != null) {
+            restrictions.add(builder.like(root.get("software").get("name"), "%" + srchSoftwareName + "%"));
         }
 
         return builder.and(restrictions.toArray(new Predicate[]{}));
