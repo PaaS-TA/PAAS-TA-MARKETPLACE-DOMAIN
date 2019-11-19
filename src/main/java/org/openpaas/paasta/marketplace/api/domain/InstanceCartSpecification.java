@@ -14,7 +14,6 @@ import org.openpaas.paasta.marketplace.api.domain.Software.Type;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
-import org.springframework.util.StringUtils;
 
 import lombok.Data;
 

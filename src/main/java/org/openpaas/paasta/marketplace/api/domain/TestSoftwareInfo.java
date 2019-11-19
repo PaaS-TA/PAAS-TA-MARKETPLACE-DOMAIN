@@ -24,7 +24,9 @@ public class TestSoftwareInfo {
 
     private String appGuid;
 
-    private Long planGuid;
+//    private Long planGuid;
+    
+    private Long softwarePlanId;
 
     @Enumerated(EnumType.STRING)
     private Status status;

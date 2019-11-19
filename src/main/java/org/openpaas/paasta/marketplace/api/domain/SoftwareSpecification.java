@@ -66,7 +66,7 @@ public class SoftwareSpecification implements Specification<Software> {
             restrictions.add(builder.equal(root.get("status"), status));
         }
         if (createdBy != null) {
-            restrictions.add(builder.equal(root.get("createdBy"), createdBy));
+        	restrictions.add(builder.like(root.get("createdBy"), "%" + createdBy + "%"));
         }
         if (categoryId != null) {
             restrictions.add(builder.equal(root.get("category").get("id"), categoryId));
