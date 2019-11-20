@@ -43,10 +43,12 @@ public class Software extends AbstractEntity {
     @NotNull(groups = { Create.class, Update.class })
     private String app, appPath;
 
-    @NotNull(groups = { Create.class, Update.class })
+//    @NotNull(groups = { Create.class, Update.class })
+    @NotNull(groups = { Create.class })
     private String manifest, manifestPath;
 
-    @NotNull(groups = { Create.class, Update.class })
+//    @NotNull(groups = { Create.class, Update.class })
+    @NotNull(groups = { Create.class })
     private String icon, iconPath;
 
     @ElementCollection
